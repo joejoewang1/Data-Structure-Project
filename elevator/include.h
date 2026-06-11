@@ -56,12 +56,12 @@ typedef struct Elevator {
     PassengerList *plist; //乘客列表
     int ExpectedDir; //期望运行方向，写可视化函数不用管
     int WaitingLimit; //非一层等待极限时间
-    int DoorState //门状态
+    int DoorState; //门状态
     
 }Elevator;
 extern struct Elevator *Car[ElevatorNum];
 
-extern struct WaitingList *Queue[FloorNum];
+extern struct WaitingList *Queue[ElevatorNum][FloorNum];
 extern struct WaitingList *System; //系统，按照放弃时间升序排序
 
 //函数声明
