@@ -32,6 +32,8 @@
 #define NONE 0
 #define Open 1
 #define Close 0
+#define Waiting 1
+#define NotWaiting 0
 
 extern int CallUp[ElevatorNum][FloorNum], CallDown[ElevatorNum][FloorNum]; //每层上下两个按钮
 extern int Time;
@@ -48,6 +50,13 @@ typedef struct WaitingList { //每一层的排队情况，采用双向链表
     struct WaitingList *next, *prev;
 }WaitingList, PassengerList;
 
+typedef struct SystemList {
+    Passenger *p;
+    struct WaitingList *next, *prev;
+    int status; //状态，决定了当前人在等待还是已经在电梯中
+    int e; //欲乘电梯
+}WaitingList, SystemList;
+
 typedef struct Elevator {
     int CallCar[FloorNum]; //电梯内楼层按钮
     int State;
@@ -62,7 +71,7 @@ typedef struct Elevator {
 extern struct Elevator *Car[ElevatorNum];
 
 extern struct WaitingList *Queue[ElevatorNum][FloorNum];
-extern struct WaitingList *System; //系统，按照放弃时间升序排序
+extern struct SystemList *System; //系统，按照放弃时间升序排序
 
 //函数声明
 extern Passenger *GenerateNextPassenger(int curTime, double prob_fac);
