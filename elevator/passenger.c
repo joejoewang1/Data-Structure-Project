@@ -32,15 +32,15 @@ Passenger *GenerateNextPassenger(int curTime, double prob_fac)
     //楼层生成逻辑目前只考虑一层需求比其他层多的情况，其他需求（如远距离需求更频繁）还未考虑，这一部分有待改进
     if (random_num <= prob_fac / 2.0) { //1层到其他层
         new_p->InFloor = 1;
-        new_p->OutFloor = !floor_num ? floor_num : floor_num + 1;
+        new_p->OutFloor = floor_num == 0 ? floor_num : floor_num + 1;
     }
     else if (random_num <= prob_fac) { //其他层到1层
         new_p->OutFloor = 1;
-        new_p->InFloor = !floor_num ? floor_num : floor_num + 1;
+        new_p->InFloor = floor_num == 0 ? floor_num : floor_num + 1;
     }
     else { //其他层之间流动
         int floor_num2 = rand() % (FloorNum - 2), i = 0;
-        new_p->InFloor = !floor_num ? floor_num : floor_num + 1;
+        new_p->InFloor = floor_num == 0 ? floor_num : floor_num + 1;
         while (floor_num2 >= 0) { //保证两个楼层不重复
             if (i == new_p->InFloor || i == 1) i++;
             else {
